@@ -17,6 +17,7 @@ public class UserController {
     private UserService userService;
 
     // Create new user
+    // curl -X POST http://localhost:9191/api/users -H "Content-Type: application/json" -d "{\"username\": \"user1\", \"password\": \"user123\", \"email\": \"user1@theshoe.com\", \"role\": \"USER\"}"
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody User user) {
         // Check if the role exists and is not ADMIN
@@ -29,6 +30,7 @@ public class UserController {
     }
     
     // Get all users
+    // curl -X GET http://localhost:9191/api/users
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
@@ -36,6 +38,7 @@ public class UserController {
     }
     
     // Get user by username
+    // curl -X GET http://localhost:9191/api/users/username/user1
     @GetMapping("/username/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
         User user = userService.getUserByUsername(username);
@@ -47,6 +50,7 @@ public class UserController {
     }
     
     // Get user by ID
+    // curl -X GET http://localhost:9191/api/users/1
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
@@ -54,6 +58,7 @@ public class UserController {
     }
 
     // Delete user by username
+    // curl -X DELETE http://localhost:9191/api/users/username/user1
     @DeleteMapping("/username/{username}")
     public ResponseEntity<Void> deleteUserByUsername(@PathVariable String username) {
         boolean isDeleted = userService.deleteUserByUsername(username);
@@ -65,6 +70,7 @@ public class UserController {
     }
     
     // Delete user by ID
+    // curl -X DELETE http://localhost:9191/api/users/1
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
         boolean isDeleted = userService.deleteUserById(id);
@@ -76,6 +82,7 @@ public class UserController {
     }
     
     // Login method
+    // curl -X POST http://localhost:9191/api/users/login -H "Content-Type: application/json" -d "{\"username\": \"user1\", \"password\": \"user123\"}"
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User loginUser) {
         User user = userService.getUserByUsername(loginUser.getUsername());

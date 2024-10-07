@@ -23,6 +23,7 @@ public class ProductController {
     private ProductService productService;
     
     // Create a new product
+    // curl -X POST http://localhost:9191/api/products -H "Content-Type: application/json" -d "{\"name\": \"ProductName\", \"price\": 99.99, \"size\": 42}"
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product createdProduct = productService.createProduct(product);
