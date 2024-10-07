@@ -84,12 +84,16 @@ public class UserController {
     // Login method
     // curl -X POST http://localhost:9191/api/users/login -H "Content-Type: application/json" -d "{\"username\": \"user1\", \"password\": \"user123\"}"
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User loginUser) {
+    public ResponseEntity<String> login(@RequestBody User loginUser) {
         User user = userService.getUserByUsername(loginUser.getUsername());
         if (user != null && user.getPassword().equals(loginUser.getPassword())) {
-            // Return user information including the role
-            return ResponseEntity.ok(user);
+            // Check user role and redirect accordingly
+            if (user.getRole() == User.Role.ADMIN) {
+                return ResponseEntity.ok("/admin/dashboard.html");
+            } else if (user.getRole() == User.Role.USER) {
+                return ResponseEntity.ok("/user/dashboard.html");
+            }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }
 }

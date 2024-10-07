@@ -19,11 +19,16 @@ public class Orders {
 	
 	@Column(nullable = false)
 	private Double amount;
-	
+
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OrdersDetails> orderDetails;
 	
-	
+	// Constructor
+	public Orders() {
+		this.created = new Timestamp(System.currentTimeMillis()); // Initialize created time
+	}
+
+	// Getters and Setters
 	public Long getId() {
 		return id;
 	}

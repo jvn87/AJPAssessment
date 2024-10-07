@@ -12,9 +12,13 @@ import com.repository.UserRepository;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    
+
     // Create new user
     public User createUser(User user) {
+        // Check if the username is already taken
+        if (isUsernameTaken(user.getUsername())) {
+            throw new RuntimeException("Username is already taken");
+        }
         return userRepository.save(user);
     }
 
@@ -24,8 +28,9 @@ public class UserService {
     }
 
     // Find user by Id
-    public User getUserById(Long id) {	    
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     // List all users
@@ -57,5 +62,10 @@ public class UserService {
         User user = getUserById(userId);
         user.setPassword(newPassword);
         return userRepository.save(user);
+    }
+
+    // Check if a username is already taken
+    public boolean isUsernameTaken(String username) {
+        return userRepository.findUserByUsername(username) != null;
     }
 }
