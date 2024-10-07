@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheShoe sDashboard</title>
+</head>
+<body>
+    <h1>Welcome to Your Role sDashboard</h1>
+    <!-- Admin functionalities -->
+    <div id="admin-section" style="display: none;">
+        <h2>Admin Actions</h2>
+        <button onclick="window.location.href='/manage-products';">Manage Products</button>
+        <button onclick="window.location.href='/view-users';">View All Users</button>
+        <button onclick="window.location.href='/change-password';">Change Password</button>
+    </div>
+
+    <!-- User functionalities -->
+    <div id="user-section" style="display: none;">
+        <h2>User Actions</h2>
+        <button onclick="window.location.href='/create-order';">Create Order</button>
+        <button onclick="window.location.href='/view-self';">View My Details</button>
+    </div>
+
+    <script>
+        // Example script to show/hide sections based on role
+        const userRole = /* Get user role from session or server */;
+        
+        if (userRole === 'ADMIN') {
+            document.getElementById('admin-section').style.display = 'block';
+        } else {
+            document.getElementById('user-section').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
