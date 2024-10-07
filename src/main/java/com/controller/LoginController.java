@@ -19,25 +19,25 @@ public class LoginController {
     // Display the login page
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login"; // This corresponds to the login.html template
+        return "login"; // This corresponds to the login.html template located in src/main/resources/templates
     }
 
     // Handle login form submission
     @PostMapping("/login")
     public String handleLogin(@RequestParam String username, @RequestParam String password, Model model) {
-        // Simple hardcoded user validation (You should replace this with proper service calls)
+        // Simple hardcoded user validation (replace with actual logic)
         if ("user".equals(username) && "password".equals(password)) {
-            return "redirect:/success"; // Redirect to success page
+            return "redirect:/user/dashboard"; // Redirect to the user dashboard after successful login
         } else {
             model.addAttribute("errorMessage", "Invalid username or password");
-            return "login"; // Show the login page again with an error message
+            return "login"; // Stay on login page and show an error message in case of failure
         }
     }
 
     // Display the registration page
     @GetMapping("/register")
     public String showRegistrationPage() {
-        return "register"; // This corresponds to the register.html template
+        return "register"; // This corresponds to the register.html template located in src/main/resources/templates
     }
 
     // Handle registration form submission
@@ -52,14 +52,12 @@ public class LoginController {
         
         userService.createUser(newUser); // Save the user
 
-        return "redirect:/login"; // Redirect to the login page after registration
+        return "redirect:/login"; // Redirect to the login page after successful registration
     }
 
     // Display success page
     @GetMapping("/success")
     public String showSuccessPage() {
-        return "success"; // You will create this page next
+        return "success"; // This corresponds to the success.html template located in src/main/resources/templates
     }
 }
-
-
